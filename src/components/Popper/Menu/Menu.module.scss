@@ -12,12 +12,16 @@
     padding-bottom: 8px;
 }
 
+.menu-body {
+    overflow-y: auto;
+}
+
 .menu-item {
     width: 100%;
     justify-content: flex-start;
     border-radius: 0;
     font-weight: 600;
-    font-family: 'ProximaNova', sans-serif;
+    font-family: var(--font-family);
     padding: 11px 16px;
     line-height: 1.8rem;
     
@@ -33,6 +37,7 @@
 //Menu Header
 .header {
     position: relative;
+    flex-shrink: 0;
     height: 50px;
     margin-top: -8px;
 }

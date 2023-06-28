@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faCircleXmark,
-    faSpinner,
-    faMagnifyingGlass,
     faEllipsisVertical,
     faEarthAsia,
     faCircleQuestion,
     faKeyboard,
-    faCloudUpload,
     faGear,
     faSignOut,
-    faCloudArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
-import {  faMessage, faPaperPlane, faUser } from '@fortawesome/free-regular-svg-icons';
+import { faMessage, faPaperPlane, faUser } from '@fortawesome/free-regular-svg-icons';
+import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
-import HeadlessTippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 
+import config from '~/config';
 import Button from '~/components/Button';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './Header.module.scss';
 import images from '~/assets/images';
-import AccountItem from '~/components/AccountItem';
 import Menu from '~/components/Popper/Menu';
 import { faBitcoin } from '@fortawesome/free-brands-svg-icons';
 import { UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
+import Search from '../Search';
 
 const cx = classNames.bind(styles);
 
@@ -62,18 +56,9 @@ const MENU_ITEMS = [
     },
 ];
 
-console.log(images.logo);
-
 function Header() {
-    const [searchResult, setSearchResult] = useState([]);
 
     const currentUser = true;
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 2, 4]);
-        }, 0);
-    }, []);
 
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -106,7 +91,7 @@ function Header() {
             icon: <FontAwesomeIcon icon={faSignOut} />,
             title: 'Log out',
             to: '/logout',
-            separate:true
+            separate: true
         }
     ];
 
@@ -114,34 +99,12 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('logo')}>
-                    <img src={images.logo} alt="" />
+                    <Link to={config.routes.home} className={cx('logo-link')}>
+                        <img src={images.logo} alt="" />
+                    </Link>
                 </div>
 
-                <HeadlessTippy
-                    interactive
-                    visible={searchResult.length > 0}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input placeholder="Search accounts and videos" spellCheck={false} />
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark} />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
+                <Search />
 
                 <div className={cx('actions')}>
                     {currentUser ? (
@@ -174,9 +137,9 @@ function Header() {
                         {currentUser ? (
                             <Image
                                 className={cx('user-avatar')}
-                                src="https.fsgn5-14.fna.fbcdn.net/v/t39.30808-1/333474529_881008326442548_8675108297227892605_n.jpg?stp=cp6_dst-jpg_p320x320&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=wNd7G6gcdeAAX-WF8yF&_nc_ht=scontent.fsgn5-14.fna&oh=00_AfDdt3IDel8T823BgUF5C04ub7fQw3SLG4nzDkuLu5LjYw&oe=646B0329"
+                                src="https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-1/333474529_881008326442548_8675108297227892605_n.jpg?stp=cp6_dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=1LnXvJMCEi4AX_yQEvb&_nc_ht=scontent.fsgn5-14.fna&oh=00_AfDFihrjx-P8MKk968nLNsd3wCCRBBLoOjVFgoAqhqling&oe=64948A69"
                                 alt="Phu Luon"
-                                // fallback="https://scontent.fsgn5-14.fna.fbcdn.net/v/t39.30808-1/333474529_881008326442548_8675108297227892605_n.jpg?stp=cp6_dst-jpg_p320x320&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=wNd7G6gcdeAAX-WF8yF&_nc_ht=scontent.fsgn5-14.fna&oh=00_AfDdt3IDel8T823BgUF5C04ub7fQw3SLG4nzDkuLu5LjYw&oe=646B0329"
+                                // fallback=""
                             />
                         ) : (
                             <button className={cx('more-btn')}>
